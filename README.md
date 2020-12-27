@@ -11,6 +11,7 @@ Test for Cosmos-Odyssey project
 
 * Prerequisities
     * Install dotnet core 3.1 SDK latest version.
+	* MSSQL database
     * Use Visual studio 2019 or newer to build/run.
     * For how to use specific dotnet cli commands take a look at <https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet.>
 
