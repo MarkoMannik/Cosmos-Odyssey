@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Cosmos Odyssey";
+}
+
+<div class="text-center">
+    <h2 class="display-4"><a asp-controller="Booking" asp-action="FromPlanet" style="text-decoration: none" onclick="showProcessingDiv();">Start booking!</a></h2>
+</div>
+
+<div id="divProcessing" class="text-center" style="visibility:hidden">
+    <p><img src="~/loading.gif"></p>
+</div>
+
+@section Scripts {
+    <script>
+        function showProcessingDiv() {
+            document.getElementById('divProcessing').style.visibility = "visible"; 
+        }
+    </script>
+}

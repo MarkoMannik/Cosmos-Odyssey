@@ -1,0 +1,51 @@
+﻿@model Cosmos_Odyssey.Models.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Reservations";
+}
+<h1 class="display-4">Reservations</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <td align="left"><h6>First Name</h6></td>
+            <td align="left"><h6>Last Name</h6></td>
+            <td align="right"><h6>Total Quoted Price</h6></td>
+            <td align="right"><h6>Total Quoted Travel Time</h6></td>
+        </tr>
+    </thead>
+    @foreach (var demandingCustomer in Model.DemandingCustomers.Where(x => x.Reservations.Any()))
+    {
+        <tbody>
+            <tr>
+                <td align="left">@demandingCustomer.FirstName</td>
+                <td align="left">@demandingCustomer.LastName</td>
+                <td align="right">@demandingCustomer.TotalQuotedPrice €</td>
+                <td align="right">@demandingCustomer.TotalQuotedTravelTime Hours</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td align="left"><h6>From</h6></td>
+                                <td align="left"><h6>To</h6></td>
+                                <td align="left"><h6>Company</h6></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var reservation in demandingCustomer.Reservations)
+                            {
+                                <tr>
+                                    <td align="left">@reservation.Provider.Leg.RouteInfo.From.Name</td>
+                                    <td align="left">@reservation.Provider.Leg.RouteInfo.To.Name</td>
+                                    <td align="left">@reservation.Provider.Company.Name</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>

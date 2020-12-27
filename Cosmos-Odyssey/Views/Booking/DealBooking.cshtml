@@ -1,0 +1,65 @@
+﻿@model Cosmos_Odyssey.Models.DealBookingViewModel
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+<h1 class="display-4">Create Reservation</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label">From:</label>
+            <label>@Model.Provider.Leg.RouteInfo.From.Name</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">To:</label>
+            <label class="control-label">@Model.Provider.Leg.RouteInfo.To.Name</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Provider:</label>
+            <label class="control-label">@Model.Provider.Company.Name</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Flight Start:</label>
+            <label class="control-label">@Model.Provider.FlightStart</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Flight End:</label>
+            <label class="control-label">@Model.Provider.FlightEnd</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Distance:</label>
+            <label class="control-label">@Model.Provider.Leg.RouteInfo.Distance KM</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Price:</label>
+            <label class="control-label">@Model.Provider.Price €</label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Reservation" asp-action="CreateReservation" asp-route-providerId="@Model.Provider.Id">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create Reservation" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

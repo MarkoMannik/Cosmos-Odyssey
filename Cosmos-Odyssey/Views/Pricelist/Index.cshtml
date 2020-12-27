@@ -1,0 +1,32 @@
+﻿@model List<Cosmos_Odyssey.Entities.Pricelist>
+@{
+    ViewData["Title"] = "Pricelists";
+}
+
+<h1 class="display-4">Pricelists</h1>
+
+<table class="table" id="deals">
+    <thead>
+        <tr>
+            <td align="left"><h6>Id</h6></td>
+            <td align="left"><h6>Valid Until</h6></td>
+            <td align="left"><h6>Status</h6></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pricelist in Model)
+        {
+            <tr>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => pricelist.Id)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => pricelist.ValidUntil)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => pricelist.Status)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,79 @@
+﻿@model Cosmos_Odyssey.Models.BookingViewModel
+@{
+    ViewData["Title"] = "Available Deals";
+}
+
+<form asp-action="AvailableDeals" method="get" asp-all-routeInfoId="@Model.RouteInfoId">
+    <p>
+        Company: <input type="text" asp-for="CompanySearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<h1 class="display-4">Available deals from @Model.FromPlanetName to @Model.ToPlanetName</h1>
+
+<table class="table" id="deals">
+    <thead>
+        <tr>
+            <td align="left"><h6>Company</h6></td>
+            <td align="left"><h6>Flight Start</h6></td>
+            <td align="left"><h6>Flight End</h6></td>
+            <td align="right"><h6>Price</h6></td>
+            <td align="right"><h6>Distance</h6></td>
+            <td align="right"><h6>Travel Time</h6></td>
+            <td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Providers)
+        {
+            <tr>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => item.Company.Name)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => item.FlightStart)
+                </td>
+                <td align="left">
+                    @Html.DisplayFor(modelItem => item.FlightEnd)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Price) €
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Leg.RouteInfo.Distance) KM
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.QuotedTravelTime) Hours
+                </td>
+                <td>
+                    <a asp-controller="Booking" asp-action="DealBooking" asp-route-providerId="@item.Id">Select</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+    {
+    <script src="~/lib/jquery/jquery-3.5.1.js"></script>
+    <script src="~/lib/jquery/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deals').DataTable({
+                "paging": false,
+                "search": false,
+                "searching": false,
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { orderable: false }
+                ]
+            });
+        });
+    </script>
+}

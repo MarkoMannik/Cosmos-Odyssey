@@ -1,0 +1,30 @@
+﻿@model Cosmos_Odyssey.Models.BookingViewModel
+@{
+    ViewData["Title"] = "Booking - From planet";
+}
+
+<form asp-action="ToPlanet" method="get">
+    <table class="table" align="center" width="400">
+        <tr>
+            <td colspan="2">
+                <h1 class="display-4">Traveling from</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>Planet:</td>
+            <td align="right">
+                <select class="custom-select-sm" asp-for="FromPlanetName" asp-items="Model.FromPlanets">
+                    <option value="">-</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="right">
+                <input type="submit" value="Next" />
+            </td>
+        </tr>
+
+    </table>
+</form>
+
