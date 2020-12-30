@@ -23,7 +23,7 @@ namespace Cosmos_Odyssey.Services
         {
             var uri = new Uri(_appSettings.Value.ApiUrl);
             using var httpResponse = await _httpClient.GetAsync(uri);
-            string response = await httpResponse.Content.ReadAsStringAsync();
+            var response = await httpResponse.Content.ReadAsStringAsync();
 
             if(response.Equals("The service is unavailable."))
             {
