@@ -70,8 +70,8 @@ namespace Cosmos_Odyssey.Services
             if (apiService == null)
                 return;
 
-            //Check if latest pricelist is expired:
-            if (databaseContext.PriceList.OrderByDescending(x => x.ValidUntil).Select(x => x.ValidUntil).FirstOrDefault() > DateTime.Now)
+            //Check if pricelist expired:
+            if (databaseContext.PriceList.Any(x => x.ValidUntil > DateTime.Now))
                 return;
 
             //Load new one:

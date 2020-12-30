@@ -24,6 +24,7 @@ namespace Cosmos_Odyssey
             services.AddControllersWithViews();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHttpClient<IApiService, ApiService>();
             services.AddTransient<IApiService, ApiService>();
             services.AddSingleton<IDatabaseUpdater, DatabaseUpdater>();
             services.AddTransient<IDataService, DataService>();
