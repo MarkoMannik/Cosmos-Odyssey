@@ -145,5 +145,30 @@ namespace Cosmos_Odyssey.Tests.Controllers
             CollectionAssert.AreEquivalent((result.Model as BookingViewModel)?.Providers, providers);
 
         }
+
+        [Test]
+        public async Task DealBooking()
+        {
+            var provider = new Provider
+            {
+                Id = "providerId_1",
+                CompanyId = "companyId_1",
+                Company = new Company
+                    {Id = "companyId_1", Name = "SpaceX"},
+                FlightEnd = DateTime.Now.AddDays(5),
+                FlightStart = DateTime.Now.AddDays(2)
+            };
+
+            _dataServiceMock.Setup(m => m.GetProviderAsync(provider.Id)).ReturnsAsync(provider);
+            
+            var controller = new BookingController(_dataServiceMock.Object);
+            var result = await controller.DealBooking(provider.Id) as ViewResult;
+
+            _dataServiceMock.VerifyAll();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DealBookingViewModel>(result.Model);
+            Assert.AreEqual(provider, (result.Model as DealBookingViewModel)?.Provider);
+        }
     }
 }
