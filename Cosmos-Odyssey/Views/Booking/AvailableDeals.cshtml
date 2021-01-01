@@ -3,6 +3,12 @@
     ViewData["Title"] = "Available Deals";
 }
 
+@if (string.IsNullOrEmpty(Model.FromPlanetName) || string.IsNullOrEmpty(Model.ToPlanetName))
+{
+    <h3 class="text-danger">invalid route ID: @Model.RouteInfoId</h3>
+    return;
+}
+
 <form asp-action="AvailableDeals" method="get" asp-all-routeInfoId="@Model.RouteInfoId">
     <p>
         Company: <input type="text" asp-for="CompanySearchString" />
