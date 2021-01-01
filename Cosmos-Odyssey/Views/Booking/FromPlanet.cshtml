@@ -13,6 +13,7 @@
         <tr>
             <td>Planet:</td>
             <td align="right">
+                <span asp-validation-for="FromPlanetName" class="text-danger"></span>
                 <select class="custom-select-sm" asp-for="FromPlanetName" asp-items="Model.FromPlanets">
                     <option value="">-</option>
                 </select>
@@ -27,4 +28,10 @@
 
     </table>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
