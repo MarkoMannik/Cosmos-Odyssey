@@ -18,6 +18,7 @@ namespace Cosmos_Odyssey.Services
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IServiceProvider _serviceProvider;
         private readonly IOptions<AppSettings> _appSettings;
+        private Timer _timer;
 
         public DatabaseUpdater(ILogger<DatabaseUpdater> logger, IServiceScopeFactory scopeFactory, IServiceProvider serviceProvider, IOptions<AppSettings> appSettings)
         {
@@ -31,17 +32,16 @@ namespace Cosmos_Odyssey.Services
         {
             await UpdateDatabaseAsync();
 
-            var timer = new Timer(_appSettings.Value.DatabaseUpdateIntervalSeconds * 1000)
-            {
-                AutoReset = true
-            };
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
+            _timer = new Timer(_appSettings.Value.DatabaseUpdateIntervalSeconds * 1000);
+            _timer.Elapsed += Timer_Elapsed;
+            _timer.Start();
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            _timer.Stop();
             await UpdateDatabaseAsync();
+            _timer.Start();
         }
 
         private async Task UpdateDatabaseAsync()
@@ -65,13 +65,13 @@ namespace Cosmos_Odyssey.Services
 
         private async Task AddNewPriceListAsync(DatabaseContext databaseContext)
         {
+            //Check if pricelist expired:
+            if (databaseContext.PriceList.Any(x => x.ValidUntil > DateTime.Now))
+                return;
+
             var apiService = _serviceProvider.GetService(typeof(IApiService)) as IApiService;
 
             if (apiService == null)
-                return;
-
-            //Check if pricelist expired:
-            if (databaseContext.PriceList.Any(x => x.ValidUntil > DateTime.Now))
                 return;
 
             //Load new one:
