@@ -13,7 +13,7 @@ Test for Cosmos-Odyssey project
     * Install dotnet core 3.1 SDK latest version.
 	* MSSQL database
     * Use Visual studio 2019 or newer to build/run.
-    * For how to use specific dotnet cli commands take a look at <https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet.>
+    * For how to use specific dotnet cli commands take a look at <https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet>
 
 * Nuget packages
     * Use `dotnet restore` in project folder to restore Nuget packages for specific project. Visual studio updates Nuget packages automatically automatically on first build.
