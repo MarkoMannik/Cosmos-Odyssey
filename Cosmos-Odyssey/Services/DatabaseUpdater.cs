@@ -51,9 +51,9 @@ namespace Cosmos_Odyssey.Services
                 var scope = _scopeFactory.CreateScope();
                 var databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
 
-                await RemoveOldPricelists(databaseContext);
-                await RemoveExpiredReservations(databaseContext);
-                await AddNewPriceList(databaseContext);
+                await RemoveOldPricelistsAsync(databaseContext);
+                await RemoveExpiredReservationsAsync(databaseContext);
+                await AddNewPriceListAsync(databaseContext);
 
                 await databaseContext.DisposeAsync();
             }
@@ -63,7 +63,7 @@ namespace Cosmos_Odyssey.Services
             }
         }
 
-        private async Task AddNewPriceList(DatabaseContext databaseContext)
+        private async Task AddNewPriceListAsync(DatabaseContext databaseContext)
         {
             var apiService = _serviceProvider.GetService(typeof(IApiService)) as IApiService;
 
@@ -192,7 +192,7 @@ namespace Cosmos_Odyssey.Services
             await databaseContext.SaveChangesAsync();
         }
 
-        private async Task RemoveOldPricelists(DatabaseContext databaseContext)
+        private async Task RemoveOldPricelistsAsync(DatabaseContext databaseContext)
         {
             if (databaseContext.PriceList.Count() <= _appSettings.Value.MaxPriceListCount)
                 return;
@@ -226,7 +226,7 @@ namespace Cosmos_Odyssey.Services
 
         }
 
-        private async Task RemoveExpiredReservations(DatabaseContext databaseContext)
+        private async Task RemoveExpiredReservationsAsync(DatabaseContext databaseContext)
         {
             var reservations = await databaseContext.Reservation
                 .Where(x => x.Provider.Leg.Pricelist.ValidUntil < DateTime.Now)
