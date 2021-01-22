@@ -22,7 +22,7 @@ namespace Cosmos_Odyssey.Entities
         {
             get
             {
-                return Convert.ToInt32((FlightEnd - FlightStart).Hours);
+                return Convert.ToInt32((FlightEnd - FlightStart).TotalHours);
             }
         }
     }
